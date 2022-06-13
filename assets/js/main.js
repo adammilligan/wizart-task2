@@ -101,3 +101,21 @@ validation
             errorMessage: 'Выберите хотя бы один файл',
         },
     ])
+
+const popup = document.querySelector('.popup')
+const popupClose = document.querySelector('.popup_close')
+const submitButton = document.querySelector('#submit_button')
+
+const popupVisibleClass  = 'popup_visible'
+
+validation.onSuccess(function () {
+    popup.classList.add(popupVisibleClass)
+
+    submitButton.classList.add('button_submitted')
+
+    submitButton.value = "Заявка уже отправлена"
+})
+
+popupClose.addEventListener('click', function () {
+    popup.classList.remove(popupVisibleClass)
+})
