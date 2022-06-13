@@ -38,8 +38,30 @@ h1 {
     height: 40px;
     border: 1px solid #E5E5E5;
     border-radius: 3px;
+    padding-left: 15px;
 }
 .button{
     background: #4ED27B;
     color: #ffffff;
+}
+.input_wrapper_file{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.input_file{
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+}
+.file_label{
+    font-family: Open Sans, sans-serif;
+    font-size: 14px;
+    display: block;
+    border: 1px solid #E5E5E5;
+    border-radius: 3px;
+    padding-left: 15px;
+    margin: 15px 0;
+    padding-top: 15px;
+    padding-bottom: 15px;
 }

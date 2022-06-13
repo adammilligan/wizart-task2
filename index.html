@@ -14,28 +14,47 @@
 </head>
 <body>
 <div class="wrapper">
-    <form action="" class="form">
+    <form action="" class="form" id="form">
         <div class="form-wrapper">
-        <h1>Форма обратной связи</h1>
-        <label for="name" class="label">Имя</label>
-        <input type="text" id="name" required pattern="[A-Za-zА-Яа-яЁё]{3-15}" class="input" name="name">
-        <label for="surname" class="label">Фамилия</label>
-        <input type="text" id="surname" required pattern="[A-Za-zА-Яа-яЁё]{3-15}" class="input" name="surname">
-        <label for="mail" class="label">Email</label>
-        <input type="email" id="mail" required class="input" name="mail">
-        <label for="birthday" class="label">Дата рождения</label>
-        <input type="date" id="birthday" required class="input" name="name">
-        <label for="phone" class="label">Номер телефона</label>
-        <input type="text" id="phone" required placeholder="+7 (___)___-__-__" pattern="[0-9]{11}" class="input"
-               name="phone">
-        <label for="city" class="label">Город</label>
-        <input type="text" id="city" required pattern="[A-Za-zА-Яа-яЁё]{3-15}" class="input" name="name">
-        <label for="name" class="label">Портфолио</label>
-        <input type="file" required accept=".doc, .docx, .pdf, .html"  class="input" name="name">
-        <input type="submit" value="Отправить заявку" class="button"></inpute>
+            <h1>Форма обратной связи</h1>
+            <div class="input_wrapper">
+                <label for="name" class="label">Имя</label>
+                <input type="text" id="name" required pattern="[A-Za-zА-Яа-яЁё]{3-15}" class="input" name="name">
+            </div>
+            <div class="input_wrapper">
+                <label for="surname" class="label">Фамилия</label>
+                <input type="text" id="surname" required pattern="[A-Za-zА-Яа-яЁё]{3-15}" class="input" name="surname">
+            </div>
+            <div class="input_wrapper">
+                <label for="email" class="label">Email</label>
+                <input type="email" id="email" required class="input" name="email">
+            </div>
+            <div class="input_wrapper">
+                <label for="birthday" class="label">Дата рождения</label>
+                <input type="date" id="birthday" required class="input" name="name">
+            </div>
+            <div class="input_wrapper">
+                <label for="phone" class="label">Номер телефона</label>
+                <input type="text" id="phone" required placeholder="+7 (___)___-__-__" pattern="[0-9]{11}" class="input"
+                       name="phone">
+            </div>
+            <div class="input_wrapper">
+                <label for="city" class="label">Город</label>
+                <input type="text" id="city" required pattern="[A-Za-zА-Яа-яЁё]{3-15}" class="input" name="name">
+            </div>
+            <label for="file" class="label">Портфолио</label>
+            <div class="input_wrapper_file">
+                <input type="file" id="file" required accept=".doc, .docx, .pdf, .html" class="input input_file"
+                       name="name">
+                <label for="file" class="file_label">
+                    <span class="file_label_text">Выберите файл</span>
+                </label>
+            </div>
+            <input type="submit" value="Отправить заявку" class="button">
         </div>
     </form>
 </div>
-
+<script src="https://unpkg.com/just-validate@latest/dist/just-validate.production.min.js"></script>
+<script src="assets/js/main.js"></script>
 </body>
 </html>
