@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="assets/css/reset.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <title>Форма обратной связи</title>
+</head>
+<body>
+<div class="wrapper">
+    <form action="" class="form">
+        <div class="form-wrapper">
+        <h1>Форма обратной связи</h1>
+        <label for="name" class="label">Имя</label>
+        <input type="text" id="name" required pattern="[A-Za-zА-Яа-яЁё]{3-15}" class="input" name="name">
+        <label for="surname" class="label">Фамилия</label>
+        <input type="text" id="surname" required pattern="[A-Za-zА-Яа-яЁё]{3-15}" class="input" name="surname">
+        <label for="mail" class="label">Email</label>
+        <input type="email" id="mail" required class="input" name="mail">
+        <label for="birthday" class="label">Дата рождения</label>
+        <input type="date" id="birthday" required class="input" name="name">
+        <label for="phone" class="label">Номер телефона</label>
+        <input type="text" id="phone" required placeholder="+7 (___)___-__-__" pattern="[0-9]{11}" class="input"
+               name="phone">
+        <label for="city" class="label">Город</label>
+        <input type="text" id="city" required pattern="[A-Za-zА-Яа-яЁё]{3-15}" class="input" name="name">
+        <label for="name" class="label">Портфолио</label>
+        <input type="file" required accept=".doc, .docx, .pdf, .html"  class="input" name="name">
+        <input type="submit" value="Отправить заявку" class="button"></inpute>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
