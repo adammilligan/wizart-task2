@@ -102,6 +102,14 @@ validation
         },
     ])
 
+    .addField('#date', [
+      {
+        plugin: JustValidatePluginDate((fields) => ({
+          format: 'yyyy-MM-dd',
+        })),
+      },
+    ]);
+
 const popup = document.querySelector('.popup')
 const popupClose = document.querySelector('.popup_close')
 const submitButton = document.querySelector('#submit_button')
