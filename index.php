@@ -19,7 +19,7 @@ include "validator.php";
 
 $Validator = new Validator($_POST);
 
-$form_data_exist = isset($_POST) && count($_POST);
+$form_data_exist = boolval(count($_POST));
 
 $name = $_POST['name'] ?? '';
 $surname = $_POST['surname'] ?? '';
@@ -29,9 +29,17 @@ $phone = $_POST['phone'] ?? '';
 $city = $_POST['city'] ?? '';
 $file =$_POST['file'] ?? '';
 
-$validation_passed = $form_data_exist ?? $Validator->Validate()
+if ($form_data_exist){
+    $Validator->Expect(key:"name", rule:"required, min_len=3");
+    $Validator->Expect(key:"surname", rule:"required, min_len=3");
+    $Validator->Expect(key:"email", rule:"required, email, min_len=5");
+    $Validator->Expect(key:"date", rule:"required, min_len=10");
+    $Validator->Expect(key:"phone", rule:"required, phone");
+    $Validator->Expect(key:"city", rule:"required, min_len=3");
+    $Validator->Expect(key:"file", rule:"required");
+}
 
-
+$validation_passed = $form_data_exist && $Validator->Validate();
 ?>
 <div class="wrapper">
     <form action="index.php" method="POST" class="form" id="form">
@@ -39,11 +47,11 @@ $validation_passed = $form_data_exist ?? $Validator->Validate()
             <h1>Форма обратной связи</h1>
             <div class="input_wrapper">
                 <label for="name" class="label">Имя</label>
-                <input type="text" id="name" required pattern="[A-Za-zА-Яа-яЁё]{3-15}" class="input" name="name" value="<?= $name ?>">
+                <input type="text" id="name" required class="input" name="name" value="<?= $name ?>">
             </div>
             <div class="input_wrapper">
                 <label for="surname" class="label">Фамилия</label>
-                <input type="text" id="surname" required pattern="[A-Za-zА-Яа-яЁё]{3-15}" class="input" name="surname" value="<?= $surname ?>">
+                <input type="text" id="surname" required class="input" name="surname" value="<?= $surname ?>">
             </div>
             <div class="input_wrapper">
                 <label for="email" class="label">Email</label>
@@ -55,12 +63,12 @@ $validation_passed = $form_data_exist ?? $Validator->Validate()
             </div>
             <div class="input_wrapper">
                 <label for="phone" class="label">Номер телефона</label>
-                <input type="text" id="phone" required placeholder="+7 (___)___-__-__" pattern="[0-9]{11}" class="input"
+                <input type="text" id="phone" required placeholder="+7 (___)___-__-__" class="input"
                        name="phone" value="<?= $phone ?>">
             </div>
             <div class="input_wrapper">
                 <label for="city" class="label">Город</label>
-                <input type="text" id="city" required pattern="[A-Za-zА-Яа-яЁё]{3-15}" class="input" name="city" value="<?= $city ?>">
+                <input type="text" id="city" required class="input" name="city" value="<?= $city ?>">
             </div>
             <label for="file" class="label">Портфолио</label>
             <div class="input_wrapper_file">
@@ -79,32 +87,6 @@ $validation_passed = $form_data_exist ?? $Validator->Validate()
         </div>
     </form>
 </div>
-
-
-<?php
-
-if ($form_data_exist){
-    print_r($_POST);
-}
-
-if ($form_data_exist){
-
-    $Validator->Expect(key:"name", rule:"required, min_len=3");
-    $Validator->Expect(key:"surname", rule:"required, min_len=3");
-    $Validator->Expect(key:"email", rule:"required, email, min_len=5");
-    $Validator->Expect(key:"date", rule:"required, min_len=10");
-    $Validator->Expect(key:"phone", rule:"required, min_len=10");
-    $Validator->Expect(key:"city", rule:"required, min_len=3");
-    $Validator->Expect(key:"file", rule:"required");
-
-    if ($Validator->Validate()){
-        echo "Validation ok";
-    } else {
-        echo "Validation failed";
-    }
-
-}
-?>
 
 <?php if ($form_data_exist): ?>
 
@@ -125,16 +107,13 @@ if ($form_data_exist){
                 <div class="popup_content">
                     <div class="popup_title">Ошибка!</div>
                     <div class="popup_text">Проверьте правильность заполнения полей!</div>
-                    <a href="#" class="popup_close">Вернуться к заполнению</a>
+                    <a href="#" class="popup_close">OK</a>
                 </div>
             </div>
         </div>
     <?php endif; ?>
 
 <?php endif; ?>
-
-
-
 
 <script src="https://unpkg.com/just-validate@latest/dist/just-validate.production.min.js"></script>
 <script src="assets/js/just-validate-plugin-date.production.min.js"></script>

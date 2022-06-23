@@ -34,22 +34,22 @@
 		 * @return bool false if ANY of the rules failed validation, true otherwise
 		 */
 		public function Validate() {
-			foreach ($this->Rules as $key => $rule) {
+            foreach ($this->Rules as $key => $rule) {
 				$rules = explode(",", $rule);
 
-				foreach ($rules as $rule) {
+                foreach ($rules as $rule) {
 					if (strstr($rule, "=")) {
 						$words = explode("=", $rule);
 						$rule = $words[0];
 						$rule_value = $words[1];
 					}
 
-					switch (strtoupper(trim($rule))) {
-
+                    switch (strtoupper(trim($rule))) {
 						case "REQ" :
 						case "REQUIRED" : {
-							if (empty(trim($this->Vars[$key])))
+                        if (empty(trim($this->Vars[$key]))) {
                                 return false;
+                            }
 							break;
 						}
 
@@ -102,6 +102,15 @@
 							}
 							break;
 						}
+
+                        case "PHONE" : {
+                            if (isset($this->Vars[$key])) {
+                                if (! filter_var($this->Vars[$key], FILTER_VALIDATE_REGEXP, [
+                                    "options" => ["regexp"=>"/^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/"],
+                                ])) return false;
+                            }
+                            break;
+                        }
 					}
 				}
 			}
