@@ -13,80 +13,91 @@
     <title>Форма обратной связи</title>
 </head>
 <body>
+<?php
+
+include "validator.php";
+
+$Validator = new Validator($_POST);
+
+$form_data_exist = isset($_POST) && count($_POST);
+
+$name = $_POST['name'] ?? '';
+$surname = $_POST['surname'] ?? '';
+$email = $_POST['email'] ?? '';
+$date = $_POST['date'] ?? '';
+$phone = $_POST['phone'] ?? '';
+$city = $_POST['city'] ?? '';
+$file =$_POST['file'] ?? '';
+
+$validation_passed = $form_data_exist ?? $Validator->Validate()
+
+
+?>
 <div class="wrapper">
     <form action="index.php" method="POST" class="form" id="form">
         <div class="form-wrapper">
             <h1>Форма обратной связи</h1>
             <div class="input_wrapper">
                 <label for="name" class="label">Имя</label>
-                <input type="text" id="name" required pattern="[A-Za-zА-Яа-яЁё]{3-15}" class="input" name="name">
+                <input type="text" id="name" required pattern="[A-Za-zА-Яа-яЁё]{3-15}" class="input" name="name" value="<?= $name ?>">
             </div>
             <div class="input_wrapper">
                 <label for="surname" class="label">Фамилия</label>
-                <input type="text" id="surname" required pattern="[A-Za-zА-Яа-яЁё]{3-15}" class="input" name="surname">
+                <input type="text" id="surname" required pattern="[A-Za-zА-Яа-яЁё]{3-15}" class="input" name="surname" value="<?= $surname ?>">
             </div>
             <div class="input_wrapper">
                 <label for="email" class="label">Email</label>
-                <input type="email" id="email" required class="input" name="email">
+                <input type="email" id="email" required class="input" name="email" value="<?= $email ?>">
             </div>
             <div class="input_wrapper">
                 <label for="birthday" class="label">Дата рождения</label>
-                <input type="date" id="date" required class="input" name="date">
+                <input type="date" id="date" required class="input" name="date" value="<?= $date ?>">
             </div>
             <div class="input_wrapper">
                 <label for="phone" class="label">Номер телефона</label>
                 <input type="text" id="phone" required placeholder="+7 (___)___-__-__" pattern="[0-9]{11}" class="input"
-                       name="phone">
+                       name="phone" value="<?= $phone ?>">
             </div>
             <div class="input_wrapper">
                 <label for="city" class="label">Город</label>
-                <input type="text" id="city" required pattern="[A-Za-zА-Яа-яЁё]{3-15}" class="input" name="city">
+                <input type="text" id="city" required pattern="[A-Za-zА-Яа-яЁё]{3-15}" class="input" name="city" value="<?= $city ?>">
             </div>
             <label for="file" class="label">Портфолио</label>
             <div class="input_wrapper_file">
                 <input type="file" id="file" required accept=".doc, .docx, .pdf, .html" class="input input_file"
-                       name="file">
+                       name="file" value="<?= $file ?>">
                 <label for="file" class="file_label">
                     <span class="file_label_text">Выберите файл</span>
                 </label>
             </div>
-            <input type="submit" value="Отправить заявку" id="submit_button" class="button">
+            <input
+                    type="submit"
+                    id="submit_button"
+                    value="<?= !$validation_passed ? 'Отправить заявку' : 'Заяка уже отправлена'  ?>"
+                    class="button <?=!$validation_passed ? '': 'button_submitted' ?>"
+            >
         </div>
     </form>
-    <div class="popup">
-        <div class="popup_body">
-            <div class="popup_content">
-                <div class="popup_title">Успешно!</div>
-                <div class="popup_text">Ваша заявка принята!</div>
-                <a href="#" class="popup_close">OK</a>
-            </div>
-        </div>
-    </div>
 </div>
 
 
 <?php
-
-include "validator.php";
-
-$form_data_exist = isset($_POST) && count($_POST);
 
 if ($form_data_exist){
     print_r($_POST);
 }
 
 if ($form_data_exist){
-    $Validator = new Validator($_POST);
 
-    $Validator=>Expect(key:"name", rule:"required, min=3");
-    $Validator=>Expect(key:"surname", rule:"required, min=3");
-    $Validator=>Expect(key:"email", rule:"required, email, min=5");
-    $Validator=>Expect(key:"birthday", rule:"required, min=10");
-    $Validator=>Expect(key:"phone", rule:"required, min=10");
-    $Validator=>Expect(key:"city", rule:"required, min=3");
-    $Validator=>Expect(key:"file", rule:"required");
+    $Validator->Expect(key:"name", rule:"required, min_len=3");
+    $Validator->Expect(key:"surname", rule:"required, min_len=3");
+    $Validator->Expect(key:"email", rule:"required, email, min_len=5");
+    $Validator->Expect(key:"date", rule:"required, min_len=10");
+    $Validator->Expect(key:"phone", rule:"required, min_len=10");
+    $Validator->Expect(key:"city", rule:"required, min_len=3");
+    $Validator->Expect(key:"file", rule:"required");
 
-    if ($Validator=>Validate()){
+    if ($Validator->Validate()){
         echo "Validation ok";
     } else {
         echo "Validation failed";
@@ -97,16 +108,27 @@ if ($form_data_exist){
 
 <?php if ($form_data_exist): ?>
 
-    <?php if (isset($Validator) && $Validator=>Validate()): ?>
-        <p>
-            Форма отправлена!
-        </p>
+    <?php if ($validation_passed): ?>
+        <div class="popup popup_visible">
+            <div class="popup_body">
+                <div class="popup_content">
+                    <div class="popup_title">Успешно!</div>
+                    <div class="popup_text">Ваша заявка принята!</div>
+                    <a href="#" class="popup_close">OK</a>
+                </div>
+            </div>
+        </div>
 
     <?php else: ?>
-
-        <p>
-            Серверная валидация не пройдена
-        </p>
+        <div class="popup popup_visible">
+            <div class="popup_body">
+                <div class="popup_content">
+                    <div class="popup_title">Ошибка!</div>
+                    <div class="popup_text">Проверьте правильность заполнения полей!</div>
+                    <a href="#" class="popup_close">Вернуться к заполнению</a>
+                </div>
+            </div>
+        </div>
     <?php endif; ?>
 
 <?php endif; ?>
