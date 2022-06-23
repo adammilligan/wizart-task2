@@ -14,7 +14,7 @@
 </head>
 <body>
 <div class="wrapper">
-    <form action="" class="form" id="form">
+    <form action="index.php" method="POST" class="form" id="form">
         <div class="form-wrapper">
             <h1>Форма обратной связи</h1>
             <div class="input_wrapper">
@@ -31,7 +31,7 @@
             </div>
             <div class="input_wrapper">
                 <label for="birthday" class="label">Дата рождения</label>
-                <input type="date" id="date" required class="input" name="name">
+                <input type="date" id="date" required class="input" name="date">
             </div>
             <div class="input_wrapper">
                 <label for="phone" class="label">Номер телефона</label>
@@ -40,12 +40,12 @@
             </div>
             <div class="input_wrapper">
                 <label for="city" class="label">Город</label>
-                <input type="text" id="city" required pattern="[A-Za-zА-Яа-яЁё]{3-15}" class="input" name="name">
+                <input type="text" id="city" required pattern="[A-Za-zА-Яа-яЁё]{3-15}" class="input" name="city">
             </div>
             <label for="file" class="label">Портфолио</label>
             <div class="input_wrapper_file">
                 <input type="file" id="file" required accept=".doc, .docx, .pdf, .html" class="input input_file"
-                       name="name">
+                       name="file">
                 <label for="file" class="file_label">
                     <span class="file_label_text">Выберите файл</span>
                 </label>
@@ -63,6 +63,57 @@
         </div>
     </div>
 </div>
+
+
+<?php
+
+include "validator.php";
+
+$form_data_exist = isset($_POST) && count($_POST);
+
+if ($form_data_exist){
+    print_r($_POST);
+}
+
+if ($form_data_exist){
+    $Validator = new Validator($_POST);
+
+    $Validator=>Expect(key:"name", rule:"required, min=3");
+    $Validator=>Expect(key:"surname", rule:"required, min=3");
+    $Validator=>Expect(key:"email", rule:"required, email, min=5");
+    $Validator=>Expect(key:"birthday", rule:"required, min=10");
+    $Validator=>Expect(key:"phone", rule:"required, min=10");
+    $Validator=>Expect(key:"city", rule:"required, min=3");
+    $Validator=>Expect(key:"file", rule:"required");
+
+    if ($Validator=>Validate()){
+        echo "Validation ok";
+    } else {
+        echo "Validation failed";
+    }
+
+}
+?>
+
+<?php if ($form_data_exist): ?>
+
+    <?php if (isset($Validator) && $Validator=>Validate()): ?>
+        <p>
+            Форма отправлена!
+        </p>
+
+    <?php else: ?>
+
+        <p>
+            Серверная валидация не пройдена
+        </p>
+    <?php endif; ?>
+
+<?php endif; ?>
+
+
+
+
 <script src="https://unpkg.com/just-validate@latest/dist/just-validate.production.min.js"></script>
 <script src="assets/js/just-validate-plugin-date.production.min.js"></script>
 <script src="assets/js/main.js"></script>
