@@ -9,6 +9,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/datepicker.minimal.css">
+    <link rel="stylesheet" href="assets/css/datepicker.material.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <title>Форма обратной связи</title>
 </head>
@@ -27,16 +29,16 @@ $email = $_POST['email'] ?? '';
 $date = $_POST['date'] ?? '';
 $phone = $_POST['phone'] ?? '';
 $city = $_POST['city'] ?? '';
-$file =$_POST['file'] ?? '';
+$file = $_POST['file'] ?? '';
 
-if ($form_data_exist){
-    $Validator->Expect(key:"name", rule:"required, min_len=3");
-    $Validator->Expect(key:"surname", rule:"required, min_len=3");
-    $Validator->Expect(key:"email", rule:"required, email, min_len=5");
-    $Validator->Expect(key:"date", rule:"required, min_len=10");
-    $Validator->Expect(key:"phone", rule:"required, phone");
-    $Validator->Expect(key:"city", rule:"required, min_len=3");
-    $Validator->Expect(key:"file", rule:"required");
+if ($form_data_exist) {
+    $Validator->Expect(key: "name", rule: "required, min_len=3");
+    $Validator->Expect(key: "surname", rule: "required, min_len=3");
+    $Validator->Expect(key: "email", rule: "required, email, min_len=5");
+    $Validator->Expect(key: "date", rule: "required, min_len=10");
+    $Validator->Expect(key: "phone", rule: "required, phone");
+    $Validator->Expect(key: "city", rule: "required, min_len=3");
+    $Validator->Expect(key: "file", rule: "required");
 }
 
 $validation_passed = $form_data_exist && $Validator->Validate();
@@ -58,8 +60,8 @@ $validation_passed = $form_data_exist && $Validator->Validate();
                 <input type="email" id="email" required class="input" name="email" value="<?= $email ?>">
             </div>
             <div class="input_wrapper">
-                <label for="birthday" class="label">Дата рождения</label>
-                <input type="date" id="date" required class="input" name="date" value="<?= $date ?>">
+                <label for="datepicker" class="label">Дата рождения</label>
+                <input type="text" id="datepicker" required class="input" name="date" value="<?= $date ?>">
             </div>
             <div class="input_wrapper">
                 <label for="phone" class="label">Номер телефона</label>
@@ -81,8 +83,8 @@ $validation_passed = $form_data_exist && $Validator->Validate();
             <input
                     type="submit"
                     id="submit_button"
-                    value="<?= !$validation_passed ? 'Отправить заявку' : 'Заяка уже отправлена'  ?>"
-                    class="button <?=!$validation_passed ? '': 'button_submitted' ?>"
+                    value="<?= !$validation_passed ? 'Отправить заявку' : 'Заяка уже отправлена' ?>"
+                    class="button <?= !$validation_passed ? '' : 'button_submitted' ?>"
             >
         </div>
     </form>
@@ -116,7 +118,7 @@ $validation_passed = $form_data_exist && $Validator->Validate();
 <?php endif; ?>
 
 <script src="https://unpkg.com/just-validate@latest/dist/just-validate.production.min.js"></script>
-<script src="assets/js/just-validate-plugin-date.production.min.js"></script>
+<script src="assets/js/datepicker.js"></script>
 <script src="assets/js/main.js"></script>
 </body>
 </html>

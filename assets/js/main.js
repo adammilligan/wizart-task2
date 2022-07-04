@@ -102,13 +102,7 @@ validation
         },
     ])
 
-    .addField('#date', [
-      {
-        plugin: JustValidatePluginDate((fields) => ({
-          format: 'yyyy-MM-dd',
-        })),
-      },
-    ]);
+
 
 const popup = document.querySelector('.popup')
 const popupClose = document.querySelector('.popup_close')
@@ -119,6 +113,12 @@ validation.onSuccess(function (event) {
     event.target.submit();
 })
 
-popupClose.addEventListener('click', function () {
-    popup.classList.remove(popupVisibleClass)
-})
+if (popupClose) {
+    popupClose.addEventListener('click', function () {
+        popup.classList.remove(popupVisibleClass)
+    })
+}
+
+const datepicker = new Datepicker('#datepicker', {
+    max: new Date()
+});
