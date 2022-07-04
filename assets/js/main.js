@@ -75,25 +75,6 @@ validation
             errorMessage: 'Поле заполнено не корректно'
         },
     ])
-    .addField('#city', [
-        {
-            rule: 'required',
-            errorMessage: 'Поле обязательно для заполнения',
-        },
-        {
-            rule: 'minLength',
-            value: 3,
-        },
-        {
-            rule: 'maxLength',
-            value: 30,
-        },
-        {
-            rule: 'customRegexp',
-            value: /^[аАбБвВгГдДеЕёЁжЖзЗиИйЙкКлЛмМнНоОпПрРсСтТуУфФхХцЦчЧшШщЩъЪыЫьЬэЭюЮяЯ]+$/,
-            errorMessage: 'Поле заполнено не корректно'
-        },
-    ])
     .addField('#file' ,[
         {
             rule: 'minFilesCount',
@@ -121,4 +102,8 @@ if (popupClose) {
 
 const datepicker = new Datepicker('#datepicker', {
     max: new Date()
+});
+
+$('#city').fias({
+    type: $.fias.type.city
 });

@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/datepicker.minimal.css">
     <link rel="stylesheet" href="assets/css/datepicker.material.css">
+    <link rel="stylesheet" href="assets/css/jquery.fias.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <title>Форма обратной связи</title>
 </head>
@@ -119,6 +120,8 @@ $validation_passed = $form_data_exist && $Validator->Validate();
 
 <script src="https://unpkg.com/just-validate@latest/dist/just-validate.production.min.js"></script>
 <script src="assets/js/datepicker.js"></script>
+<script src="assets/js/jQuery3.6.0.js"></script>
+<script src="assets/js/jquery.fias.min.js"></script>
 <script src="assets/js/main.js"></script>
 </body>
 </html>
