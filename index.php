@@ -75,7 +75,7 @@ $validation_passed = $form_data_exist && $Validator->Validate();
             </div>
             <label for="file" class="label">Портфолио</label>
             <div class="input_wrapper_file">
-                <input type="file" id="file" required accept=".doc, .docx, .pdf, .html" class="input input_file"
+                <input type="file" id="file" required accept=".doc, .docx, .pdf, .html, .mp4" class="input input_file"
                        name="file" value="<?= $file ?>">
                 <label for="file" class="file_label">
                     <span class="file_label_text">Выберите файл</span>

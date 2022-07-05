@@ -1,17 +1,3 @@
-let input = document.querySelector('#file');
-let label = input.nextElementSibling,
-    labelVal = label.querySelector('.file_label_text').innerText;
-
-input.addEventListener('change', function (e) {
-    let countFiles = '';
-    if (this.files && this.files.length >= 1)
-        countFiles = this.files.length;
-
-    if (countFiles)
-        label.querySelector('.file_label_text').innerText = 'Выбрано файлов: ' + countFiles;
-    else
-        label.querySelector('.file_label_text').innerText = labelVal;
-})
 
 const validation = new JustValidate('#form');
 
@@ -54,6 +40,12 @@ validation
             errorMessage: 'Поле заполнено не корректно'
         },
     ])
+    .addField('#city', [
+        {
+            rule: 'required',
+            errorMessage: 'Поле обязательно для заполнения',
+        },
+    ])
     .addField('#email', [
         {
             rule: 'required',
@@ -75,7 +67,7 @@ validation
             errorMessage: 'Поле заполнено не корректно'
         },
     ])
-    .addField('#file' ,[
+    .addField('#file', [
         {
             rule: 'minFilesCount',
             value: 1,
@@ -84,11 +76,10 @@ validation
     ])
 
 
-
 const popup = document.querySelector('.popup')
 const popupClose = document.querySelector('.popup_close')
 
-const popupVisibleClass  = 'popup_visible'
+const popupVisibleClass = 'popup_visible'
 
 validation.onSuccess(function (event) {
     event.target.submit();
@@ -101,9 +92,47 @@ if (popupClose) {
 }
 
 const datepicker = new Datepicker('#datepicker', {
-    max: new Date()
+    max: new Date(),
+    serialize: function (e) {
+        if (typeof e === "string") {
+            return e.replace(/\./g, '/')
+        } else {
+            const t = e.toLocaleDateString();
+
+            if (this.get("time")) {
+                let n = e.toLocaleTimeString();
+                return t + "@" + (n = n.replace(/(\d{1,2}:\d{2}):00/, "$1"))
+            }
+
+            return t
+        }
+    },
 });
 
 $('#city').fias({
     type: $.fias.type.city
+});
+
+const $input = $('#file');
+const $label = $input.next();
+const labelVal = $label.find('.file_label_text').innerText;
+
+$input.on('change', function (event) {
+    const $labelText = $label.find('.file_label_text');
+
+    if (this.files.length > 0) {
+        const size = this.files[0].size; // размер в байтах
+        const maxSize = 20000000
+
+        if (size > maxSize) {
+            event.preventDefault();
+            $labelText.text('Слишком большой файл') ;
+        } else {
+            if (this.files && this.files.length >= 1) {
+                $labelText.text('Выбран 1 файл')
+            }
+        }
+    } else {
+        $labelText.text(labelVal);
+    }
 });
